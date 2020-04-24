@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM ubuntu:20.04
 
 # Python
 RUN apt -y update && apt -y install \
