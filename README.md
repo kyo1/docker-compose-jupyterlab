@@ -4,6 +4,7 @@
 
 - Python3
 - Ruby
+- Julia
 
 
 ## How to use
