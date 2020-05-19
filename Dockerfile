@@ -1,5 +1,9 @@
 FROM ubuntu:20.04
 
+# Requirements
+RUN apt -y update && apt -y install \
+      curl
+
 # Python
 RUN apt -y update && apt -y install \
       python3 \
@@ -21,6 +25,9 @@ RUN apt -y update && apt -y install \
 RUN gem install ffi-rzmq
 RUN gem install iruby --pre
 
+# Julia
+RUN apt -y update && apt -y install julia
+
 # Add user and create directory
 RUN useradd -m jupyter
 RUN mkdir -p /home/jupyter/notebook
@@ -28,6 +35,7 @@ RUN mkdir -p /home/jupyter/notebook
 # Add the kernel when the user changes
 USER jupyter
 RUN iruby register --force # ruby kernel
+RUN julia -e 'using Pkg; Pkg.add("IJulia")' # julia kernel
 
 EXPOSE 8888
 ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--port=8888", "--notebook-dir=/home/jupyter/notebook"]
