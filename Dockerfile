@@ -28,6 +28,11 @@ RUN gem install iruby --pre
 # Julia
 RUN apt -y update && apt -y install julia
 
+# Node.js for JupyterLab extensions
+# https://github.com/nodesource/distributions
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt -y install nodejs
+
 # Add user and create directory
 RUN useradd -m jupyter
 RUN mkdir -p /home/jupyter/notebook
