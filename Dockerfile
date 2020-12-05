@@ -45,5 +45,12 @@ USER jupyter
 RUN iruby register --force # ruby kernel
 RUN julia -e 'using Pkg; Pkg.add("IJulia")' # julia kernel
 
+# Copy the configuration file after changing the user
+RUN mkdir -p /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/notebook-extension
+COPY tracker.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/notebook-extension/
+
+RUN mkdir -p /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/apputils-extension
+COPY themes.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/
+
 EXPOSE 8888
 ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser", "--port=8888", "--notebook-dir=/home/jupyter/notebook"]
