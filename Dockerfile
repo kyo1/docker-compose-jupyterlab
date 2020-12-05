@@ -33,6 +33,9 @@ RUN apt -y update && apt -y install julia
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt -y install nodejs
 
+# JupyterLab extensions
+RUN jupyter labextension install @oriolmirosa/jupyterlab_materialdarker
+
 # Add user and create directory
 RUN useradd -m jupyter
 RUN mkdir -p /home/jupyter/notebook
