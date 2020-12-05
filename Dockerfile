@@ -40,8 +40,10 @@ RUN jupyter labextension install @oriolmirosa/jupyterlab_materialdarker
 RUN useradd -m jupyter
 RUN mkdir -p /home/jupyter/notebook
 
-# Add the kernel when the user changes
+# Change the user
 USER jupyter
+
+# Add the kernel after changing the user
 RUN iruby register --force # ruby kernel
 RUN julia -e 'using Pkg; Pkg.add("IJulia")' # julia kernel
 
