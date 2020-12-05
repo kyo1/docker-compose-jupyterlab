@@ -32,6 +32,8 @@ RUN gem install iruby --pre
 # Julia
 RUN apt -y update && apt -y install julia
 
+RUN julia -e 'using Pkg; Pkg.add("Primes")'
+
 # Node.js for JupyterLab extensions
 # https://github.com/nodesource/distributions
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
