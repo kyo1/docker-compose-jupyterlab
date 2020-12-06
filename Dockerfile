@@ -12,6 +12,7 @@ RUN apt -y update && apt -y install \
 
 RUN pip3 install jupyterlab
 
+# Python packages
 RUN pip3 install pycrypto
 RUN pip3 install numpy
 RUN pip3 install sympy
@@ -32,6 +33,7 @@ RUN gem install iruby --pre
 # Julia
 RUN apt -y update && apt -y install julia
 
+# Julia packages
 RUN julia -e 'using Pkg; Pkg.add("Primes")'
 
 # Node.js for JupyterLab extensions
@@ -40,6 +42,8 @@ RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt -y install nodejs
 
 # JupyterLab extensions
+
+# Theme
 RUN jupyter labextension install @oriolmirosa/jupyterlab_materialdarker
 
 # Add user and create directory
