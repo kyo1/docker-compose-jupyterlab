@@ -25,7 +25,7 @@ $ docker-compose up
 ```
 
 
-## Use password
+## Change password
 
 Attach to the container and execute the following command.
 
