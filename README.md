@@ -16,6 +16,15 @@ $ docker-compose up
 ```
 
 
+## Update container
+
+```sh
+$ docker-compose stop
+$ docker-compose build
+$ docker-compose up
+```
+
+
 ## Use password
 
 Attach to the container and execute the following command.
