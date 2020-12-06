@@ -15,3 +15,14 @@ $ cd docker-jupyterlab
 $ mkdir -p notebook
 $ make
 ```
+
+
+## Use password
+
+Attach to the container and execute the following command.
+
+```sh
+$ python -c 'from notebook.auth import passwd; print(passwd())'
+```
+
+Change `ACCESS_TOKEN` in `.env`.
