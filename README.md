@@ -1,4 +1,4 @@
-# docker-jupyterlab
+# docker-compose-jupyterlab
 
 ## List of kernel
 
@@ -10,8 +10,8 @@
 ## How to use
 
 ```sh
-$ git clone https://github.com/kyo1/docker-jupyterlab.git
-$ cd docker-jupyterlab
+$ git clone https://github.com/kyo1/docker-compose-jupyterlab.git
+$ cd docker-compose-jupyterlab
 $ docker-compose up
 ```
 
