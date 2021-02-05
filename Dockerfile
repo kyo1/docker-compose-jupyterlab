@@ -1,9 +1,5 @@
 FROM ubuntu:20.04
 
-# Requirements
-RUN apt -y update && apt -y install \
-      curl
-
 # Python
 RUN apt -y update && apt -y install \
       python3 \
