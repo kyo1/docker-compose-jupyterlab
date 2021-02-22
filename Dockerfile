@@ -1,11 +1,11 @@
 FROM ubuntu:20.04
 
 # Requirements
-RUN apt -y update && apt -y install \
+RUN apt-get -y update && apt-get -y install \
       curl
 
 # Python
-RUN apt -y update && apt -y install \
+RUN apt-get -y update && apt-get -y install \
       python3 \
       python3-pip \
       python3-dev
@@ -21,7 +21,7 @@ RUN pip3 install numpy
 RUN pip3 install sympy
 
 # Ruby
-RUN apt -y update && apt -y install \
+RUN apt-get -y update && apt-get -y install \
       libtool \
       libffi-dev \
       ruby \
@@ -34,7 +34,7 @@ RUN gem install ffi-rzmq
 RUN gem install iruby --pre
 
 # Julia
-RUN apt -y update && apt -y install julia
+RUN apt-get -y update && apt-get -y install julia
 
 # Julia packages
 RUN julia -e 'using Pkg; Pkg.add("Primes")'
