@@ -30,7 +30,7 @@ $ docker-compose up
 Attach to the container and execute the following command.
 
 ```sh
-$ python3 -c 'from IPython.lib import passwd; print(passwd())'
+$ python3 -c "from jupyter_server.auth import passwd; print(passwd())"
 ```
 
 Change `ACCESS_TOKEN` in `.env`.
