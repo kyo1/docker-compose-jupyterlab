@@ -1,5 +1,7 @@
 FROM ubuntu:21.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Requirements
 RUN apt-get -y update && apt-get -y install \
       curl
