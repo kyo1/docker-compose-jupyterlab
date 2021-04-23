@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:21.04
 
 # Requirements
 RUN apt-get -y update && apt-get -y install \
