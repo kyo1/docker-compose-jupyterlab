@@ -18,7 +18,7 @@ RUN pip3 install jupyterlab
 RUN pip3 install JLDracula
 
 # Python packages
-RUN pip3 install pycrypto
+RUN pip3 install pycryptodome
 RUN pip3 install numpy
 RUN pip3 install sympy
 
