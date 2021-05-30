@@ -12,16 +12,16 @@
 ```sh
 $ git clone https://github.com/kyo1/docker-compose-jupyterlab.git
 $ cd docker-compose-jupyterlab
-$ docker-compose up
+$ docker compose up
 ```
 
 
 ## Update container
 
 ```sh
-$ docker-compose stop
-$ docker-compose build
-$ docker-compose up
+$ docker compose stop
+$ docker compose build
+$ docker compose up
 ```
 
 
