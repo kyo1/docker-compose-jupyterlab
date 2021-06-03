@@ -22,6 +22,11 @@ RUN pip3 install pycryptodome
 RUN pip3 install numpy
 RUN pip3 install sympy
 
+# Python code formatters
+RUN pip3 install jupyterlab_code_formatter
+RUN pip3 install black
+RUN pip3 install isort
+
 # Ruby
 RUN apt-get -y update && apt-get -y install \
       libtool \
@@ -58,5 +63,8 @@ COPY tracker.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@jupyt
 
 RUN mkdir -p /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/apputils-extension
 COPY themes.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/
+
+RUN mkdir -p /home/jupyter/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter
+COPY settings.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter/settings.jupyterlab-settings
 
 EXPOSE 8888

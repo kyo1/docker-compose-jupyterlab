@@ -1,0 +1,7 @@
+{
+    "formatOnSave": true,
+
+    "black": {
+        "line_length": 100
+    }
+}
