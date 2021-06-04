@@ -4,7 +4,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Requirements
 RUN apt-get -y update && apt-get -y install \
-      curl
+      curl \
+      fonts-firacode
 
 # Python
 RUN apt-get -y update && apt-get -y install \
