@@ -3,8 +3,6 @@
 ## List of kernel
 
 - Python3
-- Ruby
-- Julia
 
 
 ## How to use
