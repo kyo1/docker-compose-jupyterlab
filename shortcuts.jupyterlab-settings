@@ -1,0 +1,11 @@
+{
+    "shortcuts": [
+        {
+          "command": "jupyterlab_code_formatter:format_all",
+            "keys": [
+                "Accel S"
+            ],
+            "selector": ".jp-Notebook.jp-mod-editMode"
+        }
+    ]
+}

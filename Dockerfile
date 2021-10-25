@@ -44,6 +44,9 @@ COPY tracker.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@jupyt
 RUN mkdir -p /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/apputils-extension
 COPY themes.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/
 
+RUN mkdir -p /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension
+COPY shortcuts.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@jupyterlab/shortcuts-extension/
+
 RUN mkdir -p /home/jupyter/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter
 COPY settings.jupyterlab-settings /home/jupyter/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter/settings.jupyterlab-settings
 
