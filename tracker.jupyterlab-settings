@@ -2,6 +2,6 @@
     "codeCellConfig":{
         "lineNumbers": true,
         "fontFamily": "Fira Code",
-        "fontSize": 11,
+        "fontSize": 10,
     },
 }
