@@ -18,13 +18,15 @@ RUN pip3 install jupyterlab
 # JupyterLab theme
 RUN pip3 install JLDracula
 
+# Code formatter plugin
+RUN pip3 install jupyterlab_code_formatter
+
 # Python packages
-RUN pip3 install pycryptodome
 RUN pip3 install numpy
 RUN pip3 install sympy
+RUN pip3 install pycryptodome
 
 # Python code formatters
-RUN pip3 install jupyterlab_code_formatter
 RUN pip3 install black
 RUN pip3 install isort
 
