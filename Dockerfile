@@ -2,17 +2,6 @@ FROM python:3.10.11-slim-bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Requirements
-RUN apt-get -y update && apt-get -y install \
-      curl \
-      fonts-firacode
-
-# Python
-RUN apt-get -y update && apt-get -y install \
-      python3 \
-      python3-pip \
-      python3-dev
-
 RUN pip3 install jupyterlab
 
 # JupyterLab theme
