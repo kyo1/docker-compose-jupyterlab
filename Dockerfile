@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM python:3.10.11-slim-bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 
