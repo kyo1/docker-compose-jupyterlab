@@ -18,6 +18,7 @@ RUN pip3 install isort
 RUN pip3 install numpy
 RUN pip3 install sympy
 RUN pip3 install pycryptodome
+RUN pip3 install matplotlib
 
 # Add user and create directory
 RUN useradd -m jupyter
