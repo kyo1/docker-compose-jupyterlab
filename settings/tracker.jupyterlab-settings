@@ -1,7 +1,7 @@
 {
     "codeCellConfig":{
         "lineNumbers": true,
-        "fontFamily": "Fira Code",
-        "fontSize": 10,
+        // "fontFamily": "FiraCode Nerd Font",
+        // "fontSize": 12,
     },
 }

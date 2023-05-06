@@ -1,8 +1,11 @@
 # docker-compose-jupyterlab
 
+
 ## List of kernel
 
 - Python3
+- SageMath
+- Julia
 
 
 ## How to use
