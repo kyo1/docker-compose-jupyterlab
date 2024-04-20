@@ -1,12 +1,4 @@
 {
-    "black": {
-        "line_length": 100,
-    },
-
-    "isort": {
-        "line_length": 100,
-    },
-
     "preferences": {
         "default_formatter": {
             "python": [
@@ -22,4 +14,12 @@
         }
     },
     "formatOnSave": true,
+
+    "black": {
+        "line_length": 100,
+    },
+
+    "isort": {
+        "line_length": 100,
+    },
 }

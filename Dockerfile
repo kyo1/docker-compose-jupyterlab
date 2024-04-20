@@ -1,4 +1,4 @@
-FROM python:3.10.11-slim-bullseye
+FROM python:3.11.9-slim-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -13,6 +13,7 @@ RUN apt-get -y update \
       curl \
       gpg \
       bzip2 \
+      gcc \
  && apt-get -y autoremove \
  && apt-get -y clean \
  && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
@@ -26,13 +27,14 @@ ENV MAMBA_ROOT_PREFIX=/home/john
 RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar jxv bin/micromamba -C /usr/local/bin/micromamba
 
 # Install SageMath
+ENV SAGE_VERSION=10.2
 ENV PYDEVD_DISABLE_FILE_VALIDATION=1
-RUN micromamba create -y -c conda-forge -n sage sage=9.8 \
+RUN micromamba create -y -c conda-forge -n sage sage=${SAGE_VERSION} \
  && echo '#!/bin/bash\nmicromamba run -n sage sage "${@}"' > /usr/local/bin/sage \
  && chmod +x /usr/local/bin/sage
 
 # Install Julia
-ENV JULIA_VERSION=1.8.5
+ENV JULIA_VERSION=1.10.2
 ENV PATH /opt/julia-${JULIA_VERSION}/bin:${PATH}
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/$(echo ${JULIA_VERSION} | cut -d . -f 1,2)/julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
  && wget https://julialang-s3.julialang.org/bin/linux/x64/$(echo ${JULIA_VERSION} | cut -d . -f 1,2)/julia-${JULIA_VERSION}-linux-x86_64.tar.gz.asc \
@@ -45,7 +47,7 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/$(echo ${JULIA_VERSION
 # Install JupyterLab and plugins
 RUN pip3 install --no-cache-dir \
       jupyterlab \
-      jupyterlab_code_formatter \
+      jupyterlab-code-formatter \
       JLDracula
 
 # Change the user
@@ -78,7 +80,7 @@ RUN julia -e 'using Pkg; Pkg.add("Primes")'
 # Add the kernels
 RUN mkdir -p ${HOME}/.local/share/jupyter/kernels \
  && sage -pip install --no-cache-dir jupyterlab \
- && ln -s /home/john/envs/sage/share/jupyter/kernels/sagemath ${HOME}/.local/share/jupyter/kernels/sagemath-9.8 \
+ && ln -s /home/john/envs/sage/share/jupyter/kernels/sagemath ${HOME}/.local/share/jupyter/kernels/sagemath-${SAGE_VERSION} \
  && julia -e 'using Pkg; Pkg.add("IJulia")'
 
 # Copy the configuration files
@@ -89,6 +91,6 @@ RUN mkdir -p /home/john/.jupyter/lab/user-settings/@jupyterlab/apputils-extensio
 COPY --chown=john:john settings/themes.jupyterlab-settings /home/john/.jupyter/lab/user-settings/@jupyterlab/apputils-extension/
 
 RUN mkdir -p /home/john/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter
-COPY --chown=john:john settings/settings.jupyterlab-settings /home/john/.jupyter/lab/user-settings/@ryantam626/jupyterlab_code_formatter/settings.jupyterlab-settings
+COPY --chown=john:john settings/settings.jupyterlab-settings /home/john/.jupyter/lab/user-settings/jupyterlab_code_formatter/settings.jupyterlab-settings
 
 EXPOSE 8888
