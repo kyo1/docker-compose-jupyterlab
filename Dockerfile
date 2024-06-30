@@ -1,5 +1,7 @@
-FROM python:3.11.9-slim-bookworm
+FROM python:3.12.4-slim-bookworm
 
+ARG ARCH
+ENV ARCH=${ARCH:-amd64}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Add user and create directory
@@ -24,25 +26,40 @@ RUN apt-get -y update \
 
 # Install Micromamba
 ENV MAMBA_ROOT_PREFIX=/home/john
-RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar jxv bin/micromamba -C /usr/local/bin/micromamba
+RUN echo $ARCH
+RUN if [ "${ARCH}" = "amd64" ]; then \
+        curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar jxv bin/micromamba -C /usr/local/bin/micromamba; \
+    elif [ "${ARCH}" = "arm64" ]; then \
+        curl -Ls https://micro.mamba.pm/api/micromamba/linux-aarch64/latest | tar jxv bin/micromamba -C /usr/local/bin/micromamba; \
+    fi
 
 # Install SageMath
 ENV SAGE_VERSION=10.2
 ENV PYDEVD_DISABLE_FILE_VALIDATION=1
-RUN micromamba create -y -c conda-forge -n sage sage=${SAGE_VERSION} \
+RUN micromamba create -y -c conda-forge -n sage sage="${SAGE_VERSION}" \
  && echo '#!/bin/bash\nmicromamba run -n sage sage "${@}"' > /usr/local/bin/sage \
  && chmod +x /usr/local/bin/sage
 
 # Install Julia
 ENV JULIA_VERSION=1.10.2
 ENV PATH /opt/julia-${JULIA_VERSION}/bin:${PATH}
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/$(echo ${JULIA_VERSION} | cut -d . -f 1,2)/julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
- && wget https://julialang-s3.julialang.org/bin/linux/x64/$(echo ${JULIA_VERSION} | cut -d . -f 1,2)/julia-${JULIA_VERSION}-linux-x86_64.tar.gz.asc \
- && gpg --keyserver keyserver.ubuntu.com --recv-keys 66E3C7DC03D6E495 \
- && gpg --verify julia-${JULIA_VERSION}-linux-x86_64.tar.gz.asc \
- && tar zxvf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt \
- && rm julia-${JULIA_VERSION}-linux-x86_64.tar.gz \
- && rm julia-${JULIA_VERSION}-linux-x86_64.tar.gz.asc
+RUN if [ "${ARCH}" = "amd64" ]; then \
+        wget https://julialang-s3.julialang.org/bin/linux/x64/"$(echo "${JULIA_VERSION}" | cut -d . -f 1,2)"/julia-"${JULIA_VERSION}"-linux-x86_64.tar.gz; \
+        wget https://julialang-s3.julialang.org/bin/linux/x64/"$(echo "${JULIA_VERSION}" | cut -d . -f 1,2)"/julia-"${JULIA_VERSION}"-linux-x86_64.tar.gz.asc; \
+        gpg --keyserver keyserver.ubuntu.com --recv-keys 66E3C7DC03D6E495; \
+        gpg --verify julia-"${JULIA_VERSION}"-linux-x86_64.tar.gz.asc; \
+        tar zxvf julia-"${JULIA_VERSION}"-linux-x86_64.tar.gz -C /opt; \
+        rm julia-"${JULIA_VERSION}"-linux-x86_64.tar.gz; \
+        rm julia-"${JULIA_VERSION}"-linux-x86_64.tar.gz.asc; \
+    elif [ "${ARCH}" = "arm64" ]; then \
+        wget https://julialang-s3.julialang.org/bin/linux/aarch64/"$(echo "${JULIA_VERSION}" | cut -d . -f 1,2)"/julia-"${JULIA_VERSION}"-linux-aarch64.tar.gz; \
+        wget https://julialang-s3.julialang.org/bin/linux/aarch64/"$(echo "${JULIA_VERSION}" | cut -d . -f 1,2)"/julia-"${JULIA_VERSION}"-linux-aarch64.tar.gz.asc; \
+        gpg --keyserver keyserver.ubuntu.com --recv-keys 66E3C7DC03D6E495; \
+        gpg --verify julia-"${JULIA_VERSION}"-linux-aarch64.tar.gz.asc; \
+        tar zxvf julia-"${JULIA_VERSION}"-linux-aarch64.tar.gz -C /opt; \
+        rm julia-"${JULIA_VERSION}"-linux-aarch64.tar.gz; \
+        rm julia-"${JULIA_VERSION}"-linux-aarch64.tar.gz.asc; \
+    fi
 
 # Install JupyterLab and plugins
 RUN pip3 install --no-cache-dir \
@@ -78,9 +95,9 @@ RUN sage -pip install --no-cache-dir \
 RUN julia -e 'using Pkg; Pkg.add("Primes")'
 
 # Add the kernels
-RUN mkdir -p ${HOME}/.local/share/jupyter/kernels \
+RUN mkdir -p "${HOME}"/.local/share/jupyter/kernels \
  && sage -pip install --no-cache-dir jupyterlab \
- && ln -s /home/john/envs/sage/share/jupyter/kernels/sagemath ${HOME}/.local/share/jupyter/kernels/sagemath-${SAGE_VERSION} \
+ && ln -s /home/john/envs/sage/share/jupyter/kernels/sagemath "${HOME}"/.local/share/jupyter/kernels/sagemath-"${SAGE_VERSION}" \
  && julia -e 'using Pkg; Pkg.add("IJulia")'
 
 # Copy the configuration files
